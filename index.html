@@ -123,6 +123,20 @@ h2{text-align:center;font-size:2rem;margin-bottom:40px;}
   color:#000 !important;
   font-weight:600;
 }
+  .profile-pic{
+  width:180px;
+  border-radius:50%;
+  border:3px solid #00ffd5;
+  margin-top:20px;
+  animation:float 4s ease-in-out infinite;
+}
+
+/* FLOAT ANIMATION */
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+  100%{transform:translateY(0);}
+}
 </style>
 </head>
 
@@ -142,6 +156,7 @@ h2{text-align:center;font-size:2rem;margin-bottom:40px;}
 <section id="about" class="hero hidden">
   <div class="container">
     <h1>Harsh Yadav</h1>
+    <img src="profile.jpeg" alt="Harsh Yadav" class="profile-pic">
  
     <p>
       MERN Stack Developer specializing in AI-powered web applications.
