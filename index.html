@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harsh Yadav | SDE Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0d1117;
+  --card:#161b22;
+  --accent:#00ffd5;
+  --text:#e6edf3;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+body{font-family:Poppins;background:var(--bg);color:var(--text);}
+
+nav{
+  position:fixed;width:100%;top:0;
+  background:#0d1117;
+  padding:15px 8%;
+  display:flex;justify-content:space-between;
+}
+
+nav a{color:var(--text);margin-left:20px;text-decoration:none;}
+nav a:hover{color:var(--accent);}
+
+section{padding:100px 8%;min-height:100vh;}
+
+h1 span{color:var(--accent);}
+
+.skills span{
+  background:var(--card);
+  padding:8px 15px;
+  margin:5px;
+  display:inline-block;
+  border-radius:20px;
+}
+
+.project{
+  background:var(--card);
+  padding:20px;
+  margin-top:20px;
+  border-radius:10px;
+  transition:.3s;
+}
+.project:hover{transform:translateY(-8px);}
+
+.hidden{opacity:0;transform:translateY(40px);transition:1s;}
+.show{opacity:1;transform:translateY(0);}
+
+a{color:var(--accent);}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h3>Harsh</h3>
+  <div>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section id="about" class="hidden">
+  <h1>Hi, I'm <span>Harsh Yadav</span></h1>
+  <h2>Software Development Engineer | Java Full Stack | Backend Specialist</h2>
+  <p>
+    I build scalable backend systems, secure authentication architectures, and
+    performance-optimized REST APIs. Strong in Data Structures & Algorithms with
+    focus on writing efficient and production-ready code.
+  </p>
+</section>
+
+<section id="skills" class="hidden">
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <span>Java</span><span>Spring Boot</span><span>Node.js</span><span>Express</span>
+    <span>REST APIs</span><span>JWT</span><span>RBAC</span>
+    <span>React.js</span><span>MySQL</span><span>MongoDB</span>
+    <span>DSA</span><span>OOP</span><span>DBMS</span>
+    <span>Git</span><span>Postman</span>
+  </div>
+</section>
+
+<section id="projects" class="hidden">
+  <h2>Projects</h2>
+
+  <div class="project">
+    <h3>AI Powered Student Skill Gap Analyzer</h3>
+    <p>Scalable FastAPI backend for resume–JD analysis using NLP.</p>
+    <ul>
+      <li>Computed job match score across 1000+ skill tokens.</li>
+      <li>Reduced response time by 35% with optimized schema.</li>
+      <li>Developed 6 REST APIs for personalized learning paths.</li>
+    </ul>
+    <a href="#">GitHub →</a>
+  </div>
+
+  <div class="project">
+    <h3>Secure Authentication System</h3>
+    <p>JWT based authentication with RBAC.</p>
+    <ul>
+      <li>8+ protected REST API routes</li>
+      <li>bcrypt password hashing</li>
+      <li>500+ API test requests</li>
+    </ul>
+    <a href="#">GitHub →</a>
+  </div>
+
+  <div class="project">
+    <h3>Expense Tracker REST API</h3>
+    <p>CRUD-based scalable REST API using MVC architecture.</p>
+    <ul>
+      <li>Optimized response structure</li>
+      <li>Secure environment configuration</li>
+    </ul>
+    <a href="#">GitHub →</a>
+  </div>
+
+</section>
+
+<section id="achievements" class="hidden">
+  <h2>Achievements</h2>
+  <ul>
+    <li>Solved 150+ DSA problems (LeetCode & GFG)</li>
+    <li>Conducted workshops for 100+ students</li>
+    <li>Attended IIT Delhi IoT Workshop</li>
+    <li>Inter-Department Badminton Winner</li>
+  </ul>
+</section>
+
+<section id="contact" class="hidden">
+  <h2>Contact</h2>
+  <p>Email: <a href="mailto:harshyad95@gmail.com">harshyad95@gmail.com</a></p>
+  <p><a href="#">LinkedIn</a></p>
+  <p><a href="#">GitHub</a></p>
+  <p><a href="#">LeetCode</a></p>
+</section>
+
+<script>
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){entry.target.classList.add("show");}
+});
+});
+document.querySelectorAll(".hidden").forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
