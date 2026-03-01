@@ -3,56 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harsh Yadav | SDE Portfolio</title>
+<title>Harsh Yadav | MERN AI Developer</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#0d1117;
-  --card:#161b22;
+  --card:rgba(22,27,34,0.7);
   --accent:#00ffd5;
   --text:#e6edf3;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
 body{font-family:Poppins;background:var(--bg);color:var(--text);}
 
 nav{
   position:fixed;width:100%;top:0;
-  background:#0d1117;
-  padding:15px 8%;
+  background:rgba(13,17,23,0.8);
+  backdrop-filter:blur(10px);
   display:flex;justify-content:space-between;
+  padding:15px 8%;
 }
-
-nav a{color:var(--text);margin-left:20px;text-decoration:none;}
+nav a{color:var(--text);margin-left:25px;text-decoration:none;}
 nav a:hover{color:var(--accent);}
 
-section{padding:100px 8%;min-height:100vh;}
+section{padding:120px 20px;}
+.container{max-width:1100px;margin:auto;}
 
-h1 span{color:var(--accent);}
+h1{
+  font-size:3rem;
+  background:linear-gradient(to right,#00ffd5,#00aaff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+h2{text-align:center;font-size:2rem;margin-bottom:40px;}
 
+.hero{text-align:center;}
+.hero p{max-width:650px;margin:20px auto;font-size:18px;}
+
+.skills{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;}
 .skills span{
   background:var(--card);
-  padding:8px 15px;
-  margin:5px;
-  display:inline-block;
-  border-radius:20px;
+  padding:10px 18px;
+  border-radius:25px;
+}
+
+.projects{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
 }
 
 .project{
   background:var(--card);
-  padding:20px;
-  margin-top:20px;
-  border-radius:10px;
-  transition:.3s;
+  padding:25px;
+  border-radius:16px;
+  transition:.4s;
 }
-.project:hover{transform:translateY(-8px);}
+.project:hover{
+  transform:translateY(-10px);
+  border:1px solid var(--accent);
+}
+
+.project h3{color:var(--accent);}
+.project ul{padding-left:18px;margin-top:10px;line-height:1.6;}
+
+.project a{
+  display:inline-block;margin-top:15px;
+  padding:8px 18px;border:1px solid var(--accent);
+  border-radius:30px;text-decoration:none;color:var(--accent);
+}
+.project a:hover{background:var(--accent);color:#000;}
+
+.contact{text-align:center;}
+.contact a{display:block;margin:10px;color:var(--accent);}
 
 .hidden{opacity:0;transform:translateY(40px);transition:1s;}
 .show{opacity:1;transform:translateY(0);}
-
-a{color:var(--accent);}
+  .tech{
+  color:#00ffd5;
+  font-size:14px;
+  margin:8px 0 12px;
+}
 </style>
 </head>
 
@@ -64,85 +96,100 @@ a{color:var(--accent);}
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
-    <a href="#achievements">Achievements</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
-<section id="about" class="hidden">
-  <h1>Hi, I'm <span>Harsh Yadav</span></h1>
-  <h2>Software Development Engineer | Java Full Stack | Backend Specialist</h2>
-  <p>
-    I build scalable backend systems, secure authentication architectures, and
-    performance-optimized REST APIs. Strong in Data Structures & Algorithms with
-    focus on writing efficient and production-ready code.
-  </p>
+<!-- HERO -->
+<section id="about" class="hero hidden">
+  <div class="container">
+    <h1>Harsh Yadav</h1>
+    <p>
+      MERN Stack Developer specializing in AI-powered web applications.
+      I build scalable systems using React, Node.js, MongoDB and FastAPI microservices
+      for NLP-based intelligent features.
+    </p>
+  </div>
 </section>
 
+<!-- SKILLS -->
 <section id="skills" class="hidden">
-  <h2>Technical Skills</h2>
-  <div class="skills">
-    <span>Java</span><span>Spring Boot</span><span>Node.js</span><span>Express</span>
-    <span>REST APIs</span><span>JWT</span><span>RBAC</span>
-    <span>React.js</span><span>MySQL</span><span>MongoDB</span>
-    <span>DSA</span><span>OOP</span><span>DBMS</span>
-    <span>Git</span><span>Postman</span>
+  <div class="container">
+    <h2>Tech Stack</h2>
+    <div class="skills">
+      <span>React.js</span>
+      <span>Node.js</span>
+      <span>Express.js</span>
+      <span>MongoDB</span>
+      <span>FastAPI</span>
+      <span>NLP</span>
+      <span>spaCy</span>
+      <span>JWT Auth</span>
+      <span>REST APIs</span>
+      <span>DSA</span>
+      <span>Git</span>
+      <span>Postman</span>
+    </div>
   </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects" class="hidden">
-  <h2>Projects</h2>
+  <div class="container">
+    <h2>Projects</h2>
 
-  <div class="project">
-    <h3>AI Powered Student Skill Gap Analyzer</h3>
-    <p>Scalable FastAPI backend for resume–JD analysis using NLP.</p>
-    <ul>
-      <li>Computed job match score across 1000+ skill tokens.</li>
-      <li>Reduced response time by 35% with optimized schema.</li>
-      <li>Developed 6 REST APIs for personalized learning paths.</li>
-    </ul>
-    <a href="#">GitHub →</a>
+    <div class="projects">
+
+      <!-- PROJECT 1 -->
+      <div class="project">
+        <h3>🔐 Secure Authentication System</h3>
+
+        <p class="tech">Node.js • Express.js • MongoDB • JWT • bcrypt</p>
+
+        <ul>
+          <li>Implemented JWT authentication with access & refresh tokens for secure session handling</li>
+          <li>Protected credentials using bcrypt hashing for 100+ simulated users</li>
+          <li>Architected 8+ protected REST API routes with RBAC</li>
+          <li>Tested API workflows with 500+ Postman requests</li>
+        </ul>
+
+        <a href="https://github.com/harsh-0905/secure-auth-system" target="_blank">GitHub →</a>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project">
+        <h3>💰 Expense Tracker REST API</h3>
+
+        <p class="tech">Node.js • Express.js • MongoDB Atlas • REST API • MVC</p>
+
+        <ul>
+          <li>Developed RESTful APIs with full CRUD functionality</li>
+          <li>Designed scalable Mongoose schemas for structured storage</li>
+          <li>Optimized API response for faster client-side integration</li>
+          <li>Secured configuration using environment variables</li>
+        </ul>
+
+        <a href="https://github.com/harsh-0905/expense-tracker-backened" target="_blank">GitHub →</a>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="project">
+        <h3>🤖 AI Powered Student Skill Gap Analyzer</h3>
+
+        <p class="tech">FastAPI • MongoDB • NLP • spaCy • TF-IDF</p>
+
+        <ul>
+          <li>Built scalable FastAPI backend for resume–JD analysis</li>
+          <li>Computed job-match score across 1000+ skill tokens</li>
+          <li>Reduced recommendation response time by 35%</li>
+          <li>Developed 6 REST APIs for personalized learning paths</li>
+        </ul>
+
+        <a href="https://github.com/harsh-0905/ai-skill-gap-analyser" target="_blank">GitHub →</a>
+      </div>
+
+    </div>
   </div>
-
-  <div class="project">
-    <h3>Secure Authentication System</h3>
-    <p>JWT based authentication with RBAC.</p>
-    <ul>
-      <li>8+ protected REST API routes</li>
-      <li>bcrypt password hashing</li>
-      <li>500+ API test requests</li>
-    </ul>
-    <a href="#">GitHub →</a>
-  </div>
-
-  <div class="project">
-    <h3>Expense Tracker REST API</h3>
-    <p>CRUD-based scalable REST API using MVC architecture.</p>
-    <ul>
-      <li>Optimized response structure</li>
-      <li>Secure environment configuration</li>
-    </ul>
-    <a href="#">GitHub →</a>
-  </div>
-
-</section>
-
-<section id="achievements" class="hidden">
-  <h2>Achievements</h2>
-  <ul>
-    <li>Solved 150+ DSA problems (LeetCode & GFG)</li>
-    <li>Conducted workshops for 100+ students</li>
-    <li>Attended IIT Delhi IoT Workshop</li>
-    <li>Inter-Department Badminton Winner</li>
-  </ul>
-</section>
-
-<section id="contact" class="hidden">
-  <h2>Contact</h2>
-  <p>Email: <a href="mailto:harshyad95@gmail.com">harshyad95@gmail.com</a></p>
-  <p><a href="#">LinkedIn</a></p>
-  <p><a href="#">GitHub</a></p>
-  <p><a href="#">LeetCode</a></p>
 </section>
 
 <script>
