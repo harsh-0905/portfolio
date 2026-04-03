@@ -8,10 +8,10 @@ export default function Footer() {
           © 2026 Harsh Yadav | AI Focused Full Stack Developer
         </p>
         <div className="flex gap-6">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
+          <a href="https://github.com/harsh-0905" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
             GitHub
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
+          <a href="https://www.linkedin.com/in/harshyadav95-dev/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
             LinkedIn
           </a>
           <a href="mailto:harshyad95@gmail.com" className="text-slate-400 hover:text-cyan-400 transition-colors">
