@@ -1,109 +1,130 @@
+// Skills.jsx — Mobile friendly, proper spacing
+
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
-const skillCategories = {
-  Languages: ['Java', 'JavaScript', 'Python', 'C++'],
-  Frontend: ['React.js', 'HTML5', 'CSS3', 'Tailwind CSS'],
-  Backend: ['Node.js', 'Express.js', 'FastAPI', 'REST APIs', 'JWT', 'MVC Architecture'],
-  Databases: ['MongoDB', 'MySQL'],
-  Tools: ['Git', 'GitHub', 'Postman', 'MongoDB Atlas', 'Maven', 'VS Code'],
-};
-
-function SkillOrb({ skill, angle, radius, delay }) {
-  const x = Math.cos((angle * Math.PI) / 180) * radius;
-  const y = Math.sin((angle * Math.PI) / 180) * radius;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay, duration: 0.4 }}
-      whileHover={{ scale: 1.15 }}
-      className="absolute"
-      style={{
-        left: `calc(50% + ${x}px)`,
-        top: `calc(50% + ${y}px)`,
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      <span className="px-3 py-1.5 rounded-lg glass border border-purple-500/30 text-sm text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors cursor-default whitespace-nowrap block">
-        {skill}
-      </span>
-    </motion.div>
-  );
-}
+const skillCategories = [
+  {
+    category: 'Languages',
+    icon: '💻',
+    color: '#06b6d4',
+    skills: ['Java', 'JavaScript', 'Python', 'C++'],
+  },
+  {
+    category: 'Frontend',
+    icon: '🎨',
+    color: '#a855f7',
+    skills: ['React.js', 'HTML5', 'CSS3', 'Tailwind CSS'],
+  },
+  {
+    category: 'Backend',
+    icon: '⚙️',
+    color: '#3b82f6',
+    skills: ['Node.js', 'Express.js', 'FastAPI', 'REST APIs', 'JWT', 'MVC Architecture'],
+  },
+  {
+    category: 'Databases',
+    icon: '🗄️',
+    color: '#22c55e',
+    skills: ['MongoDB', 'MySQL', 'MongoDB Atlas'],
+  },
+  {
+    category: 'Tools',
+    icon: '🛠️',
+    color: '#f59e0b',
+    skills: ['Git', 'GitHub', 'Postman', 'VS Code', 'Maven'],
+  },
+  {
+    category: 'AI / NLP',
+    icon: '🧠',
+    color: '#ec4899',
+    skills: ['spaCy', 'NLP', 'TF-IDF', 'scikit-learn'],
+  },
+];
 
 export default function Skills() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  const allSkills = Object.entries(skillCategories).flatMap(([cat, skills]) =>
-    skills.map((s) => ({ skill: s, category: cat }))
-  );
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section id="skills" className="min-h-screen py-24 px-6 relative z-10">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        className="max-w-6xl mx-auto"
-      >
-        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-16 text-center">
-          Skills Galaxy
-        </h2>
+    <section
+      id="skills"
+      className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 relative z-10"
+    >
+      <div className="max-w-6xl mx-auto" ref={ref}>
 
-        <div className="relative h-[450px] hidden md:block">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-0 w-full h-full"
-          >
-            {allSkills.map(({ skill }, i) => (
-              <SkillOrb
-                key={skill}
-                skill={skill}
-                angle={(i / allSkills.length) * 360}
-                radius={180}
-                delay={i * 0.03}
-              />
-            ))}
-          </motion.div>
-          <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 flex items-center justify-center"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <span className="text-4xl">⚡</span>
-          </motion.div>
-        </div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 md:mb-16"
+        >
+          <p className="text-purple-400 font-mono text-xs sm:text-sm tracking-widest uppercase mb-3">
+            — What I Work With —
+          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            Skills
+          </h2>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 md:mt-16">
-          {Object.entries(skillCategories).map(([category, skills], idx) => (
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          {skillCategories.map(({ category, icon, color, skills }, idx) => (
             <motion.div
               key={category}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + idx * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="glass-card rounded-xl p-6"
+              transition={{ delay: idx * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -4 }}
+              className="rounded-2xl p-5 flex flex-col gap-4"
+              style={{
+                background: 'rgba(15,23,42,0.75)',
+                border: `1px solid ${color}25`,
+                backdropFilter: 'blur(14px)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+                transition: 'all 0.3s ease',
+              }}
             >
-              <h3 className="text-purple-400 font-semibold mb-4">{category}</h3>
+              {/* Card header */}
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                  style={{ background: `${color}15`, border: `1px solid ${color}35` }}
+                >
+                  {icon}
+                </div>
+                <h3 className="font-semibold text-base" style={{ color }}>
+                  {category}
+                </h3>
+              </div>
+
+              {/* Divider */}
+              <div
+                className="h-px w-full"
+                style={{ background: `linear-gradient(90deg, ${color}40, transparent)` }}
+              />
+
+              {/* Chips */}
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
-                  <motion.span
+                  <span
                     key={skill}
-                    whileHover={{ scale: 1.05 }}
-                    className="px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-sm text-slate-300 hover:border-cyan-500/30"
+                    className="px-3 py-1.5 rounded-lg text-xs font-mono"
+                    style={{
+                      background: `${color}10`,
+                      border: `1px solid ${color}28`,
+                      color: '#94a3b8',
+                    }}
                   >
                     {skill}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

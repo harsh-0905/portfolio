@@ -36,7 +36,7 @@ export default function App() {
       <CursorGlow />
       <TechIcons />
 
-      <main className="relative z-[1] space-y-32 px-6 md:px-12 lg:px-20 max-w-6x1 mx-auto">
+      <main className="relative z-[1] overflow-x-hidden">
         <Hero />
         <About />
         <Skills />
