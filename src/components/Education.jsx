@@ -1,4 +1,4 @@
-// Education.jsx — Mobile friendly
+// Education.jsx — Clean timeline cards like reference portfolio
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -12,7 +12,6 @@ const education = [
     status: 'Pursuing',
     icon: '🎓',
     color: '#06b6d4',
-    accent: '#7c3aed',
   },
   {
     degree: 'Bachelor of Computer Applications',
@@ -22,7 +21,6 @@ const education = [
     status: 'Completed',
     icon: '📘',
     color: '#a855f7',
-    accent: '#3b82f6',
   },
 ];
 
@@ -31,121 +29,146 @@ export default function Education() {
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section
-      id="education"
-      className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 relative z-10"
-    >
-      <div className="max-w-4xl mx-auto" ref={ref}>
+    <section id="education" style={{ padding: '80px 0', position: 'relative', zIndex: 10 }}>
+      <div ref={ref} style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          style={{ textAlign: 'center', marginBottom: '56px' }}
         >
-          <p className="text-purple-400 font-mono text-xs sm:text-sm tracking-widest uppercase mb-3">
+          <p style={{ color: '#a855f7', fontFamily: 'monospace', fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 12px 0' }}>
             — Academic Background —
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+          <h2 style={{
+            fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 800, margin: 0,
+            background: 'linear-gradient(90deg, #a855f7, #06b6d4)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          }}>
             Education
           </h2>
         </motion.div>
 
-        {/* Cards — stack on mobile, side by side on md+ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-          {education.map((edu, i) => (
-            <motion.div
-              key={edu.degree}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -5 }}
-              className="relative rounded-2xl p-5 sm:p-6 overflow-hidden"
-              style={{
-                background: 'rgba(15,23,42,0.78)',
-                border: `1px solid ${edu.color}30`,
-                backdropFilter: 'blur(16px)',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-                transition: 'all 0.35s ease',
-              }}
-            >
-              {/* Glow blob */}
-              <div
-                className="absolute top-0 right-0 w-28 h-28 rounded-full pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle, ${edu.color}18 0%, transparent 70%)`,
-                  filter: 'blur(18px)',
-                  transform: 'translate(30%, -30%)',
-                }}
-              />
+        {/* Timeline */}
+        <div style={{ position: 'relative' }}>
 
-              {/* Top row */}
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-                  style={{ background: `${edu.color}15`, border: `1px solid ${edu.color}35` }}
+          {/* Center line */}
+          <div
+            className="hidden md:block"
+            style={{
+              position: 'absolute', left: '50%', top: 0, bottom: 0, width: '1px',
+              transform: 'translateX(-50%)',
+              background: 'linear-gradient(to bottom, rgba(168,85,247,0.8), rgba(6,182,212,0.8))',
+            }}
+          />
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+            {education.map((edu, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <motion.div
+                  key={edu.degree}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.18, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {edu.icon}
-                </div>
+                  {/* Desktop */}
+                  <div className="hidden md:grid" style={{ gridTemplateColumns: '1fr 60px 1fr', alignItems: 'center' }}>
+                    {/* Left cell */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '28px' }}>
+                      {isLeft && <EduCard edu={edu} align="right" />}
+                    </div>
+                    {/* Dot */}
+                    <div style={{ display: 'flex', justifyContent: 'center', zIndex: 10, position: 'relative' }}>
+                      <div style={{
+                        width: '48px', height: '48px', borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '20px', flexShrink: 0,
+                        background: 'rgba(8,12,28,0.98)',
+                        border: `2px solid ${edu.color}`,
+                        boxShadow: `0 0 18px ${edu.color}55`,
+                      }}>
+                        {edu.icon}
+                      </div>
+                    </div>
+                    {/* Right cell */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', paddingLeft: '28px' }}>
+                      {!isLeft && <EduCard edu={edu} align="left" />}
+                    </div>
+                  </div>
 
-                {/* Status chip */}
-                <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase"
-                  style={{
-                    background: edu.status === 'Pursuing' ? 'rgba(6,182,212,0.1)' : 'rgba(34,197,94,0.1)',
-                    border: `1px solid ${edu.status === 'Pursuing' ? 'rgba(6,182,212,0.35)' : 'rgba(34,197,94,0.35)'}`,
-                    color: edu.status === 'Pursuing' ? '#06b6d4' : '#22c55e',
-                  }}
-                >
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{
-                      background: edu.status === 'Pursuing' ? '#06b6d4' : '#22c55e',
-                      boxShadow: `0 0 4px ${edu.status === 'Pursuing' ? '#06b6d4' : '#22c55e'}`,
-                    }}
-                  />
-                  {edu.status}
-                </span>
-              </div>
-
-              {/* Degree badge */}
-              <span
-                className="inline-block text-xs font-mono px-2 py-0.5 rounded-md mb-2"
-                style={{
-                  background: `${edu.color}18`,
-                  color: edu.color,
-                  border: `1px solid ${edu.color}30`,
-                }}
-              >
-                {edu.short}
-              </span>
-
-              {/* Title */}
-              <h3 className="text-base sm:text-lg font-bold text-slate-100 mb-2 leading-snug">
-                {edu.degree}
-              </h3>
-
-              {/* Institution */}
-              <p className="text-sm mb-3 leading-relaxed" style={{ color: edu.color }}>
-                {edu.institution}
-              </p>
-
-              {/* Divider */}
-              <div
-                className="h-px mb-3"
-                style={{ background: `linear-gradient(90deg, ${edu.color}40, transparent)` }}
-              />
-
-              {/* Period */}
-              <div className="flex items-center gap-2">
-                <span className="text-slate-500 text-xs">📅</span>
-                <p className="text-slate-400 text-sm font-mono">{edu.period}</p>
-              </div>
-            </motion.div>
-          ))}
+                  {/* Mobile */}
+                  <div className="block md:hidden">
+                    <EduCard edu={edu} align="left" mobile />
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function EduCard({ edu, align, mobile }) {
+  return (
+    <div style={{
+      width: '100%',
+      maxWidth: mobile ? '100%' : '320px',
+      padding: '22px',
+      borderRadius: '16px',
+      background: 'rgba(15,23,42,0.82)',
+      border: `1px solid ${edu.color}28`,
+      backdropFilter: 'blur(14px)',
+      boxShadow: `0 4px 24px ${edu.color}12`,
+      textAlign: mobile ? 'left' : align,
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Glow blob */}
+      <div style={{
+        position: 'absolute', top: 0, right: 0, width: '80px', height: '80px', borderRadius: '50%',
+        background: `radial-gradient(circle, ${edu.color}18 0%, transparent 70%)`,
+        filter: 'blur(16px)', transform: 'translate(30%, -30%)', pointerEvents: 'none',
+      }}/>
+
+      {/* Status + short on same row */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: align === 'right' && !mobile ? 'flex-end' : 'flex-start', gap: '8px', marginBottom: '12px' }}>
+        <span style={{
+          padding: '3px 10px', borderRadius: '20px', fontSize: '10px', fontFamily: 'monospace',
+          textTransform: 'uppercase', letterSpacing: '0.1em',
+          background: `${edu.color}15`, border: `1px solid ${edu.color}30`, color: edu.color,
+        }}>
+          {edu.short}
+        </span>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', gap: '5px',
+          padding: '3px 10px', borderRadius: '20px', fontSize: '10px', fontFamily: 'monospace',
+          textTransform: 'uppercase', letterSpacing: '0.08em',
+          background: edu.status === 'Pursuing' ? 'rgba(6,182,212,0.1)' : 'rgba(34,197,94,0.1)',
+          border: `1px solid ${edu.status === 'Pursuing' ? 'rgba(6,182,212,0.35)' : 'rgba(34,197,94,0.35)'}`,
+          color: edu.status === 'Pursuing' ? '#06b6d4' : '#22c55e',
+        }}>
+          <span style={{
+            width: '6px', height: '6px', borderRadius: '50%',
+            background: edu.status === 'Pursuing' ? '#06b6d4' : '#22c55e',
+            boxShadow: `0 0 4px ${edu.status === 'Pursuing' ? '#06b6d4' : '#22c55e'}`,
+          }}/>
+          {edu.status}
+        </span>
+      </div>
+
+      <h3 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: 700, color: '#e2e8f0', lineHeight: 1.3 }}>
+        {edu.degree}
+      </h3>
+      <p style={{ margin: '0 0 12px 0', fontSize: '13px', color: edu.color, lineHeight: 1.5 }}>
+        {edu.institution}
+      </p>
+      <div style={{ height: '1px', background: `linear-gradient(90deg, ${align === 'right' && !mobile ? 'transparent, ' : ''}${edu.color}35${align === 'right' && !mobile ? '' : ', transparent'})`, marginBottom: '12px' }}/>
+      <p style={{ margin: 0, fontSize: '13px', color: '#475569', fontFamily: 'monospace' }}>📅 {edu.period}</p>
+    </div>
   );
 }

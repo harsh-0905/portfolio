@@ -1,15 +1,9 @@
-// Contact.jsx — Mobile friendly, proper spacing
+// Contact.jsx — Clean reference style layout
 
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from '../config/email';
-
-const INFO_CARDS = [
-  { icon: '📞', label: 'Phone',    value: '+91 8448610430',        href: 'tel:+918448610430',               color: '#06b6d4' },
-  { icon: '✉️', label: 'Email',    value: 'harshyad95@gmail.com',  href: 'mailto:harshyad95@gmail.com',     color: '#a855f7' },
-  { icon: '📍', label: 'Location', value: 'Ghaziabad, India',      href: null,                              color: '#f59e0b' },
-];
 
 export default function Contact() {
   const ref = useRef(null);
@@ -35,199 +29,204 @@ export default function Contact() {
     }
   };
 
+  const inputStyle = {
+    width: '100%',
+    padding: '12px 16px',
+    borderRadius: '10px',
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(168,85,247,0.25)',
+    color: '#e2e8f0',
+    fontSize: '14px',
+    outline: 'none',
+    boxSizing: 'border-box',
+    fontFamily: 'inherit',
+    transition: 'border 0.2s ease',
+  };
+
   return (
-    <section
-      id="contact"
-      className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 relative z-10"
-    >
-      <div className="max-w-5xl mx-auto" ref={ref}>
+    <section id="contact" style={{ padding: '80px 0', position: 'relative', zIndex: 10 }}>
+      <div ref={ref} style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 20px' }}>
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          style={{ textAlign: 'center', marginBottom: '56px' }}
         >
-          <p className="text-purple-400 font-mono text-xs sm:text-sm tracking-widest uppercase mb-3">
+          <p style={{ color: '#a855f7', fontFamily: 'monospace', fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 12px 0' }}>
             — Let's Talk —
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+          <h2 style={{
+            fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 800, margin: '0 0 14px 0',
+            background: 'linear-gradient(90deg, #a855f7, #06b6d4)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          }}>
             Get In Touch
           </h2>
+          <p style={{ margin: 0, fontSize: '15px', color: '#64748b', maxWidth: '480px', marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.7 }}>
+            I'm open to internship and full-time opportunities. Have a question or want to work together? My inbox is always open.
+          </p>
         </motion.div>
 
-        {/* Grid — stacks on mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
+        {/* Two column layout */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '32px',
+          alignItems: 'start',
+        }}>
 
-          {/* LEFT — Info */}
+          {/* LEFT — Contact info */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="flex flex-col gap-4"
+            transition={{ delay: 0.1, duration: 0.55 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
           >
-            <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-2">
-              I'm currently open to internship and full-time opportunities. Whether you have a question, a project idea, or just want to say hi — my inbox is always open!
-            </p>
-
-            {INFO_CARDS.map((card, i) => (
+            {[
+              { icon: '📞', label: 'Phone',    value: '+91 8448610430',       href: 'tel:+918448610430',               color: '#06b6d4' },
+              { icon: '✉️', label: 'Email',    value: 'harshyad95@gmail.com', href: 'mailto:harshyad95@gmail.com',     color: '#a855f7' },
+              { icon: '📍', label: 'Location', value: 'Ghaziabad, India',     href: null,                              color: '#f59e0b' },
+            ].map((card, i) => (
               <motion.div
                 key={card.label}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -16 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.2 + i * 0.1 }}
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-4 rounded-2xl p-4 sm:p-5"
                 style={{
-                  background: 'rgba(15,23,42,0.75)',
-                  border: `1px solid ${card.color}28`,
+                  display: 'flex', alignItems: 'center', gap: '16px',
+                  padding: '18px 20px', borderRadius: '14px',
+                  background: 'rgba(15,23,42,0.78)',
+                  border: `1px solid ${card.color}25`,
                   backdropFilter: 'blur(12px)',
-                  transition: 'all 0.3s ease',
                 }}
               >
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                  style={{ background: `${card.color}15`, border: `1px solid ${card.color}35` }}
-                >
+                <div style={{
+                  width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
+                  background: `${card.color}14`, border: `1px solid ${card.color}30`,
+                }}>
                   {card.icon}
                 </div>
                 <div>
-                  <p className="text-slate-500 text-xs font-mono tracking-wider uppercase mb-1">
-                    {card.label}
-                  </p>
+                  <p style={{ margin: '0 0 3px 0', fontSize: '11px', color: '#475569', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{card.label}</p>
                   {card.href ? (
-                    <a
-                      href={card.href}
-                      className="text-sm font-medium transition-colors"
-                      style={{ color: card.color }}
-                    >
-                      {card.value}
-                    </a>
+                    <a href={card.href} style={{ color: card.color, fontSize: '14px', fontWeight: 500, textDecoration: 'none' }}>{card.value}</a>
                   ) : (
-                    <p className="text-slate-300 text-sm font-medium">{card.value}</p>
+                    <p style={{ margin: 0, color: '#94a3b8', fontSize: '14px', fontWeight: 500 }}>{card.value}</p>
                   )}
                 </div>
               </motion.div>
             ))}
 
-            {/* Socials */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap gap-3 mt-2"
-            >
+            {/* Social links */}
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '4px' }}>
               {[
-                { label: 'GitHub',   href: 'https://github.com/harsh-0905',                     color: '#94a3b8', icon: '⌥' },
-                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harshyadav95-dev',      color: '#06b6d4', icon: '◈' },
-                { label: 'X',        href: 'https://x.com/harshyad95',                          color: '#a855f7', icon: '✦' },
-              ].map(({ label, href, color, icon }) => (
+                { label: 'GitHub',   href: 'https://github.com/harsh-0905',                color: '#94a3b8' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harshyadav95-dev', color: '#06b6d4' },
+                { label: 'X',        href: 'https://x.com/harshyad95',                     color: '#a855f7' },
+              ].map(({ label, href, color }) => (
                 <motion.a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ y: -3 }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono"
+                  whileHover={{ y: -2 }}
                   style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    color,
+                    padding: '8px 18px', borderRadius: '10px', fontSize: '13px', fontWeight: 500,
+                    background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                    color, textDecoration: 'none',
                   }}
                 >
-                  {icon} {label}
+                  {label}
                 </motion.a>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* RIGHT — Form */}
           <motion.form
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={{ delay: 0.2, duration: 0.55 }}
             onSubmit={handleSubmit}
-            className="rounded-2xl p-5 sm:p-7 flex flex-col gap-5"
             style={{
-              background: 'rgba(15,23,42,0.75)',
+              display: 'flex', flexDirection: 'column', gap: '18px',
+              padding: '28px', borderRadius: '18px',
+              background: 'rgba(15,23,42,0.78)',
               border: '1px solid rgba(255,255,255,0.07)',
               backdropFilter: 'blur(16px)',
-              boxShadow: '0 8px 40px rgba(0,0,0,0.3)',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.28)',
             }}
           >
-            {[
-              { id: 'name',    label: 'Name',    type: 'text',  placeholder: 'Your name'      },
-              { id: 'email',   label: 'Email',   type: 'email', placeholder: 'your@email.com' },
-            ].map(({ id, label, type, placeholder }) => (
-              <div key={id} className="flex flex-col gap-2">
-                <label className="text-slate-400 text-xs font-mono tracking-widest uppercase">
-                  {label}
-                </label>
-                <input
-                  type={type}
-                  required
-                  value={formData[id]}
-                  onChange={(e) => setFormData({ ...formData, [id]: e.target.value })}
-                  placeholder={placeholder}
-                  className="w-full px-4 py-3 rounded-xl text-white text-sm placeholder-slate-600 outline-none"
-                  style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(168,85,247,0.25)',
-                    transition: 'border 0.2s ease',
-                  }}
-                  onFocus={(e) => (e.target.style.border = '1px solid rgba(6,182,212,0.6)')}
-                  onBlur={(e)  => (e.target.style.border = '1px solid rgba(168,85,247,0.25)')}
-                />
-              </div>
-            ))}
-
-            {/* Message */}
-            <div className="flex flex-col gap-2">
-              <label className="text-slate-400 text-xs font-mono tracking-widest uppercase">
-                Message
+            {/* Name */}
+            <div>
+              <label style={{ display: 'block', fontSize: '11px', color: '#64748b', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '8px' }}>
+                Your Name
               </label>
-              <textarea
-                required
-                rows={5}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="Your message..."
-                className="w-full px-4 py-3 rounded-xl text-white text-sm placeholder-slate-600 outline-none resize-none"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(168,85,247,0.25)',
-                  transition: 'border 0.2s ease',
-                }}
-                onFocus={(e) => (e.target.style.border = '1px solid rgba(6,182,212,0.6)')}
-                onBlur={(e)  => (e.target.style.border = '1px solid rgba(168,85,247,0.25)')}
+              <input
+                type="text" required value={formData.name}
+                onChange={e => setFormData({ ...formData, name: e.target.value })}
+                placeholder="What's your name?"
+                style={inputStyle}
+                onFocus={e => e.target.style.border = '1px solid rgba(6,182,212,0.6)'}
+                onBlur={e => e.target.style.border = '1px solid rgba(168,85,247,0.25)'}
               />
             </div>
 
-            {/* Submit */}
+            {/* Email */}
+            <div>
+              <label style={{ display: 'block', fontSize: '11px', color: '#64748b', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '8px' }}>
+                Your Email
+              </label>
+              <input
+                type="email" required value={formData.email}
+                onChange={e => setFormData({ ...formData, email: e.target.value })}
+                placeholder="What's your email?"
+                style={inputStyle}
+                onFocus={e => e.target.style.border = '1px solid rgba(6,182,212,0.6)'}
+                onBlur={e => e.target.style.border = '1px solid rgba(168,85,247,0.25)'}
+              />
+            </div>
+
+            {/* Message */}
+            <div>
+              <label style={{ display: 'block', fontSize: '11px', color: '#64748b', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '8px' }}>
+                Your Message
+              </label>
+              <textarea
+                required rows={5} value={formData.message}
+                onChange={e => setFormData({ ...formData, message: e.target.value })}
+                placeholder="What do you want to say?"
+                style={{ ...inputStyle, resize: 'none' }}
+                onFocus={e => e.target.style.border = '1px solid rgba(6,182,212,0.6)'}
+                onBlur={e => e.target.style.border = '1px solid rgba(168,85,247,0.25)'}
+              />
+            </div>
+
+            {/* Button */}
             <motion.button
               type="submit"
               disabled={status === 'sending'}
-              whileHover={{ scale: 1.02, boxShadow: '0 0 24px rgba(168,85,247,0.4)' }}
+              whileHover={{ scale: 1.02, boxShadow: '0 0 24px rgba(124,58,237,0.4)' }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-3.5 rounded-xl text-white font-semibold text-sm tracking-wide disabled:opacity-60"
               style={{
+                padding: '14px', borderRadius: '12px', border: 'none',
                 background: 'linear-gradient(135deg, #7c3aed, #2563eb)',
+                color: '#fff', fontSize: '14px', fontWeight: 600,
+                cursor: status === 'sending' ? 'not-allowed' : 'pointer',
+                opacity: status === 'sending' ? 0.7 : 1,
                 boxShadow: '0 0 16px rgba(124,58,237,0.3)',
               }}
             >
-              {status === 'sending' ? '⏳ Sending...' : status === 'success' ? '✅ Sent!' : 'Send Message →'}
+              {status === 'sending' ? '⏳ Sending...' : status === 'success' ? '✅ Message Sent!' : 'Send Message →'}
             </motion.button>
 
-            {status === 'success' && (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-400 text-sm text-center font-mono">
-                Thanks! I'll get back to you soon.
-              </motion.p>
-            )}
             {status === 'error' && (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-sm text-center font-mono">
-                Something went wrong. Email me directly.
-              </motion.p>
+              <p style={{ margin: 0, color: '#f87171', fontSize: '13px', textAlign: 'center' }}>
+                Something went wrong. Email me directly at harshyad95@gmail.com
+              </p>
             )}
           </motion.form>
         </div>
