@@ -1,10 +1,8 @@
-// Avatar.jsx — Premium Holographic AI Orb (fixed)
-
 import { useRef, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 /* ── Orbiting badge pill ─────────────────────────────────────── */
-function Badge({ icon, label, angle, radius = 168, delay = 0 }) {
+function Badge({ icon, label, angle, radius = 148, delay = 0 }) {
   const rad = (angle * Math.PI) / 180;
   const x = Math.cos(rad) * radius;
   const y = Math.sin(rad) * radius;
@@ -19,7 +17,10 @@ function Badge({ icon, label, angle, radius = 168, delay = 0 }) {
         y:       { delay: delay + 0.5, duration: 3.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
       }}
       className="absolute flex flex-col items-center gap-[5px] select-none pointer-events-none"
-      style={{ left: `calc(50% + ${x}px - 20px)`, top: `calc(50% + ${y}px - 20px)` }}
+      style={{
+        left: `calc(50% + ${x}px - 20px)`,
+        top:  `calc(50% + ${y}px - 20px)`,
+      }}
     >
       <div
         className="w-10 h-10 rounded-[10px] flex items-center justify-center text-[17px]"
@@ -93,13 +94,68 @@ export default function Avatar() {
   ];
 
   return (
+    /*
+      ── Responsive wrapper ──────────────────────────────────────
+      • w-full keeps it from overflowing the parent
+      • max-w-[420px] caps desktop size
+      • aspect-square keeps it a perfect square at any width
+      • overflow-visible lets badges peek out without clipping
+      • The inner scale wrapper shrinks everything proportionally
+    */
     <div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className="relative flex items-center justify-center"
-      style={{ width: 420, height: 420, perspective: "900px" }}
+      className="relative w-full mx-auto"
+      style={{ maxWidth: 420 }}
     >
+      {/* This div maintains square aspect ratio */}
+      <div style={{ paddingBottom: "100%", position: "relative" }}>
+        <div
+          ref={ref}
+          onMouseMove={onMove}
+          onMouseLeave={onLeave}
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ perspective: "900px" }}
+        >
+          {/*
+            Scale the entire orb + badges together using CSS scale.
+            On mobile the container will be narrower than 420px, so we
+            scale down proportionally. `style` is set via inline var trick.
+          */}
+          <ScaledOrb rotX={rotX} rotY={rotY} BADGES={BADGES} PARTICLES={PARTICLES} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Scaled inner orb — scales to fit any container ─────────── */
+function ScaledOrb({ rotX, rotY, BADGES, PARTICLES }) {
+  const wrapRef = useRef(null);
+
+  return (
+    /*
+      We render at fixed 420×420 then use CSS scale() to shrink it
+      to fit. The parent is 100vw-aware through the outer div.
+      `transform-origin: center` + `scale` via CSS custom property.
+    */
+    <div
+      ref={wrapRef}
+      style={{
+        width: 420,
+        height: 420,
+        // Scale down on mobile: 100% of the viewport-limited container / 420
+        transform: "scale(var(--orb-scale, 1))",
+        transformOrigin: "center center",
+      }}
+    >
+      <style>{`
+        @media (max-width: 420px) {
+          :root { --orb-scale: calc(100vw / 420); }
+        }
+        @media (min-width: 421px) {
+          :root { --orb-scale: 1; }
+        }
+      `}</style>
+
       {/* Ambient backdrop glow */}
       <div
         className="absolute inset-0 rounded-full pointer-events-none"
@@ -110,10 +166,8 @@ export default function Avatar() {
         }}
       />
 
-      {/* Particles */}
       {PARTICLES.map((p, i) => <Particle key={i} {...p} />)}
 
-      {/* Tilt wrapper — single style prop, no duplicate */}
       <motion.div
         style={{
           rotateX: rotX,
@@ -156,11 +210,7 @@ export default function Avatar() {
         {/* Dashed orbit ring */}
         <div
           className="absolute rounded-full pointer-events-none"
-          style={{
-            inset: 24,
-            border: "1px dashed rgba(6,182,212,0.18)",
-            borderRadius: "50%",
-          }}
+          style={{ inset: 24, border: "1px dashed rgba(6,182,212,0.18)", borderRadius: "50%" }}
         />
 
         {/* Core orb */}
@@ -169,8 +219,7 @@ export default function Avatar() {
           transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
           className="absolute flex items-center justify-center rounded-full overflow-hidden"
           style={{
-            width: 220,
-            height: 220,
+            width: 220, height: 220,
             background: "radial-gradient(circle at 36% 34%, rgba(168,85,247,0.6) 0%, rgba(59,130,246,0.38) 36%, rgba(6,182,212,0.2) 62%, rgba(2,8,23,0.6) 100%)",
             border: "1px solid rgba(6,182,212,0.32)",
             boxShadow: `
@@ -182,7 +231,6 @@ export default function Avatar() {
             backdropFilter: "blur(10px)",
           }}
         >
-          {/* Inner grid */}
           <div
             className="absolute inset-0 rounded-full overflow-hidden opacity-[0.22]"
             style={{
@@ -195,7 +243,6 @@ export default function Avatar() {
             }}
           />
 
-          {/* Circuit arcs */}
           <svg className="absolute inset-0 w-full h-full opacity-[0.38]" viewBox="0 0 220 220">
             <circle cx="110" cy="110" r="72" fill="none" stroke="rgba(6,182,212,0.55)" strokeWidth="0.6" strokeDasharray="4 8" />
             <circle cx="110" cy="110" r="48" fill="none" stroke="rgba(168,85,247,0.45)" strokeWidth="0.5" strokeDasharray="2 6" />
@@ -211,26 +258,21 @@ export default function Avatar() {
             ))}
           </svg>
 
-          {/* Specular highlight */}
           <div
             className="absolute rounded-full pointer-events-none"
             style={{
-              width: 80, height: 80,
-              top: 22, left: 30,
+              width: 80, height: 80, top: 22, left: 30,
               background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)",
               filter: "blur(4px)",
             }}
           />
 
-          {/* Center icon */}
           <div className="relative z-10 flex flex-col items-center gap-2 select-none">
             <motion.span
               animate={{ scale: [1, 1.1, 1], opacity: [0.85, 1, 0.85] }}
               transition={{ duration: 2.8, repeat: Infinity }}
               className="text-[60px] leading-none"
-              style={{
-                filter: "drop-shadow(0 0 16px rgba(6,182,212,1)) drop-shadow(0 0 30px rgba(168,85,247,0.75))",
-              }}
+              style={{ filter: "drop-shadow(0 0 16px rgba(6,182,212,1)) drop-shadow(0 0 30px rgba(168,85,247,0.75))" }}
             >
               🧠
             </motion.span>
@@ -261,7 +303,7 @@ export default function Avatar() {
 
         {/* Floating badges */}
         {BADGES.map((b, i) => (
-          <Badge key={b.label} {...b} delay={1 + i * 0.18} />
+          <Badge key={b.label} {...b} radius={148} delay={1 + i * 0.18} />
         ))}
       </motion.div>
     </div>
