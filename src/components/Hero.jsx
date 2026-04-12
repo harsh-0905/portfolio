@@ -29,7 +29,7 @@ export default function Hero() {
         {/* ── 1. TEXT BLOCK ── */}
         <div
           className="flex flex-col items-center text-center w-full"
-          style={{ padding: '88px 20px 16px' }}   {/* 88px pushes below 64px navbar */}
+          style={{ padding: '88px 20px 16px' }}  
         >
           <motion.p
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
